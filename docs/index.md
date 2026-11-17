@@ -17,9 +17,9 @@ Repository: https://github.com/apink634/is373-individual
 
 ### Research question and target reader
 
-**Question:** ____ (what do entry-level medical-AI roles ask new graduates to do, and what should my portfolio show first?)
+**Question:** What do entry-level AI security and medical-AI roles ask new graduates to do, and which of my projects should my portfolio show first?
 
-**Target reader:** A hiring manager for an AI security or security-minded software team. They look for "someone with experience." (Time spent: ____)
+**Target reader:** A hiring manager for an AI security or security-minded software team. They look for "someone with experience." (Time spent: a few minutes.)
 
 **Promise:** "For an AI security hiring manager, this portfolio shows a tested, secure web project I built and how I made each decision."
 
@@ -60,9 +60,9 @@ Open each link on the employer's own page and fill in the facts yourself. Write 
 
 ### Facts, interpretations and assumptions
 
-- **Facts (from the postings):** ____
-- **Interpretation:** ____
-- **Assumptions (not confirmed):** ____
+- **Facts (from the postings):** Brain Co. and Together AI are aimed at new graduates (degrees expected Spring or Summer 2027), ask for Python or similar languages, and Brain Co. says no prior security experience is needed. Commure's engineering role asks for professional experience and is based in Brazil. The medical postings I rejected asked for an MD or DO, years of sales experience, or 5+ years of design experience.
+- **Interpretation:** "I think entry level roles do care more about coding and projects than security experience."
+- **Assumptions (not confirmed):** That hiring managers will click through to my GitHub.
 
 ### Responsibilities mapped to my evidence
 
@@ -70,8 +70,8 @@ Open each link on the employer's own page and fill in the facts yourself. Write 
 |---|---|---|
 | Python and Flask backend (Commure) | Word Game, a Flask and SQLite app with tests (IS218): https://github.com/apink634/word-game | No professional experience yet |
 | Reliable Python, version control, CI/CD, shipped project (Brain Co.) | Word Game and App Studio repos with tests and CI (links above) | Docker and Traefik in my Server Studio repo: https://github.com/apink634/my-server-studio | No cloud platform experience yet |
-| Cybersecurity best practices (Commure) | My App Studio: password hashing, login throttling, CSRF protection and server-enforced admin/member roles: https://github.com/apink634/my-app-studio (built with an AI coach; I tested and reviewed it) | ____ |
-| Code quality and testing (Commure) | Automated checks and CI in my App Studio repo (same link) | ____ |
+| Cybersecurity best practices (Commure) | My App Studio: password hashing, login throttling, CSRF protection and server-enforced admin/member roles: https://github.com/apink634/my-app-studio (built with an AI coach; I tested and reviewed it) | No security job experience; my work is course projects |
+| Code quality and testing (Commure) | Automated checks and CI in my App Studio repo (same link) | Not yet used at professional scale |
 | Evaluate AI model output (Ambience) | Planned: my RAG evaluation questions (section 2) | Not built yet |
 
 ### Portfolio page outline
@@ -98,7 +98,7 @@ Open each link on the employer's own page and fill in the facts yourself. Write 
 
 ### AI assistance
 
-Tool: Claude. Used for: finding candidate postings and drafting this structure. Verified by me: ____.
+Tool: Claude. Used for: finding candidate postings and drafting this structure. Verified by me: I checked all the posting links myself on 2026-11-16.
 
 **Correction after checking the original page:** Claude first suggested an Abridge Software Engineer, Early Career posting. When I opened the link on 2026-11-16 the posting did not exist, so I removed it and replaced it with postings I could confirm on the employer's own page.
 
@@ -106,7 +106,7 @@ Tool: Claude. Used for: finding candidate postings and drafting this structure. 
 
 ## 2. RAG app + technical research
 
-**Changed / checked / next:** Changed: ____. Checked: ____. Next: ____.
+**Changed / checked / next:** Changed: chose a graph over my first guess of vector. Checked: I checked all the links on 2026-11-16. Next: build the import step and test page 1.
 
 ### Domain, reader and question
 
@@ -116,45 +116,45 @@ Tool: Claude. Used for: finding candidate postings and drafting this structure. 
 
 ### Permitted source
 
-- **Source:** MedlinePlus health topics, https://medlineplus.gov
-- **Permission:** MedlinePlus says non-copyrighted content may be reproduced and redistributed, and asks for the acknowledgment "Source: MedlinePlus, National Library of Medicine." Rule page: https://medlineplus.gov/copyright.html (checked ____).
-- **Excluded by me:** A.D.A.M. Medical Encyclopedia content and drug monographs (copyrighted), and the RSS feeds (personal use only).
+- **Source:** The summaries on MedlinePlus diabetes health topic pages, https://medlineplus.gov
+- **Permission:** MedlinePlus says non-copyrighted content may be reproduced and redistributed, and asks for the acknowledgment "Source: MedlinePlus, National Library of Medicine." Public domain areas include "summaries on health topic pages". MedlinePlus also offers downloadable XML data through its web service for developers. Rule page: https://medlineplus.gov/copyright.html (checked 2026-11-17).
+- **Excluded by me:** A.D.A.M. Medical Encyclopedia content, drug monographs from the American Society of Health-System Pharmacists, most images (copyrighted unless marked), and the RSS feeds (personal use only). I will not frame MedlinePlus pages under another domain, and I will show the source link and the acknowledgment "Source: MedlinePlus, National Library of Medicine."
 
 ### Research: what I learned (in my own words)
 
 - RAG (retrieval-augmented generation): "RAG is helpful because it allows an AI to go through whatever relevant content it needs instead of only a set database. It is helpful for medical questions as opposed to a chatbox because standard memory can lead to more hallucinations, which is not ideal for medical answers."
-- Vector search: ____
-- Graph database: ____
+- Vector search: "A vector search finds information based on what is relevant and similar."
+- Graph database: "A graph database stores concepts and connections and helps with how information connects."
 - Chunking: "The app should be able to chunk the paper into different parts and then search the parts to find relevant information. This way, it is more efficient."
-- Embeddings: ____
-- Entities and relationships: ____
-- Import (extract, transform, load): ____
+- Embeddings: "Embedding is numbers that represent information instead of the actual information. It helps with grouping similar things."
+- Entities and relationships: Entities are the distinct nouns in the data (conditions, medications, symptoms). Relationships are the links between them. Example: Metformin (entity) treats (relationship) type 2 diabetes (entity).
+- Import (extract, transform, load): "Importing is the load phase." (Correction after checking: import covers all three steps, extract, transform and load; load is the last one.)
 
 ### Two approaches compared
 
 | | Approach A: vector only | Approach B: vector + graph |
 |---|---|---|
-| What it stores | ____ | ____ |
-| Good for | ____ | ____ |
-| Cost / complexity | ____ | ____ |
+| What it stores | Chunks of text turned into embeddings, with their source links | Entities (such as conditions and symptoms) and the relationships between them, plus source links |
+| Good for | Finding the passage closest in meaning to a question | Questions about how things connect, and summarizing large collections |
+| Cost / complexity | Lower: chunk, embed, search | Higher: extracting entities and relationships has to be built and checked first |
 
 **My prediction (first guess, not final):** vector search, "since the question is more straightforward."
 
-**Final choice:** graph, "because it handles complex information." (To confirm: my first guess was vector. Do my questions need connections between facts, or just the right passage? I will write my answer here: ____)
+**Final choice:** graph, "because diabetes and medical fields deal with complex information and dependencies, so the connections are important." (My first guess was vector.)
 
 ### Source trace (planned, not run)
 
-One MedlinePlus page → chunk → representation → retrieval → answer with a visible source link: ____
+One MedlinePlus page → chunk → representation → retrieval → "What are symptoms of diabetes" -> the MedlinePlus Diabetes health topic page (https://medlineplus.gov/diabetes.html, open it and confirm) is split into chunks, each keeping its page link -> the chunks are stored -> the question retrieves the chunk about symptoms -> the model answers from only that chunk and shows the page link. (planned, not run)
 
 ### Architecture and constraints
 
-1. **Source:** MedlinePlus diabetes health topic pages.
-2. **Import:** download the pages and split them into chunks, each chunk keeping its page link.
+1. **Source:** The summaries on MedlinePlus diabetes health topic pages.
+2. **Import:** download the summaries (from the pages or MedlinePlus's XML data) and split them into chunks, each chunk keeping its page link.
 3. **Store:** the chunks go into a store I can search (vector or graph, per my choice above).
 4. **Retrieve:** when someone asks a question, the app finds the few chunks that match.
 5. **Answer:** an AI model writes the answer from only those chunks and shows the source links.
 
-**Hosting and limits:** ____ (planned; a hosted app is not required at Plan)
+**Hosting and limits:** It will run on my laptop (local only) at this stage. A hosted app is not required at Plan.
 
 ### Stories and checks (3 to 5, all planned)
 
@@ -177,4 +177,4 @@ One MedlinePlus page → chunk → representation → retrieval → answer with 
 
 ### AI assistance
 
-Tool: Claude. Used for: checking the MedlinePlus reuse rule and drafting this structure. Verified by me: ____.
+Tool: Claude. Used for: checking the MedlinePlus reuse rule and drafting this structure. Verified by me: I checked the links on 2026-11-16.
