@@ -70,14 +70,14 @@ All three are on the employers' own pages. "Not stated" means the page doesn't s
 |---|---|---|
 | Python and Flask backend (Commure) | Word Game, a Flask and SQLite app with tests (IS218): https://github.com/apink634/word-game | No professional experience yet |
 | Reliable Python, version control, CI/CD, shipped project (Brain Co.) | Word Game and App Studio repos with tests and CI (links above); Docker and Traefik in my Server Studio repo: https://github.com/apink634/my-server-studio | No cloud platform experience yet; no hands-on LLM project yet |
-| Cybersecurity best practices (Commure) | My App Studio: password hashing, login throttling, CSRF protection and server-enforced admin/member roles: https://github.com/apink634/my-app-studio (built with an AI coach; I tested and reviewed it) | No security job experience; my work is course projects |
+| Cybersecurity best practices (Commure) | My App Studio: password hashing, login throttling, CSRF protection and server-enforced admin/member roles: https://github.com/apink634/my-app-studio; test: [members are blocked from admin routes](https://github.com/apink634/my-app-studio/blob/f224075e99493874f7cdd0e8ed880b1104cce5a6/contracts/test_roles.py#L30-L35) (built with an AI coach; I tested and reviewed it) | No security job experience; my work is course projects |
 | Code quality and testing (Commure) | Automated checks and CI in my App Studio repo (same link) | Not yet used at professional scale |
 | Evaluate AI model output (Ambience) | Planned: my RAG evaluation questions (section 2) | Not built yet |
 
 ### Portfolio page outline
 
 1. **Home:** my name, the promise sentence, and one featured project (App Studio) linked above the fold, plus links to my code and a way to contact me.
-2. **Projects:** App Studio first (security: password hashing, CSRF, server-enforced roles; tests and CI), then Word Game and my RAG app once it exists. Each project shows one decision, the alternative I considered and the check that tested it.
+2. **Projects:** App Studio first (security: password hashing, CSRF, server-enforced roles; tests and CI), then Word Game and my RAG app once it exists. Each project shows one decision, the alternative I considered and the check that tested it. App Studio's check: [test showing a regular member gets 403 on admin routes](https://github.com/apink634/my-app-studio/blob/f224075e99493874f7cdd0e8ed880b1104cce5a6/contracts/test_roles.py#L30-L35).
 3. **About / contact:** a short paragraph, my GitHub and LinkedIn, and my resume.
 
 ### Two lightweight layouts
@@ -94,7 +94,7 @@ All three are on the employers' own pages. "Not stated" means the page doesn't s
 
 | Reviewer | Date | What they tried | Feedback | Link | My decision |
 |---|---|---|---|---|---|
-| ____ | ____ | ____ | ____ | ____ | ____ |
+| Dhruvi (dhruvi0805) | 2026-11-17 | Read how I mapped employer requirements to my projects and looked at the featured App Studio card. | Clear: connecting Brain Co.'s CI/CD requirements to my Word Game and App Studio work made it easy to see why I chose AI security. Suggestion: on the App Studio card, link directly to a test that verifies a security feature, such as a regular member being blocked from an admin-only route, so a hiring manager can quickly see how I checked it. | [Issue #2](https://github.com/apink634/is373-individual/issues/2) | Used the suggestion: linked the test that checks a regular member gets 403 on the admin API and admin page, in the Projects outline and the evidence table. |
 
 ### AI assistance
 
