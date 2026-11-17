@@ -13,7 +13,7 @@ Repository: https://github.com/apink634/is373-individual
 
 ## 1. Portfolio + career research
 
-**Changed / checked / next:** Changed: replaced a dead posting and chose Direction B. Checked: opened and read the listing pages. Next: build the portfolio home page and project cards.
+**Changed / checked / next:** Changed: replaced a dead posting, chose Direction B, and linked the App Studio admin-access test after Dhruvi's review. Checked: opened and read the listing pages. Next: build the portfolio home page and project cards.
 
 ### Research question and target reader
 
@@ -100,13 +100,15 @@ All three are on the employers' own pages. "Not stated" means the page doesn't s
 
 Tool: Claude. Used for: finding candidate postings and drafting this structure. Verified by me: I checked all the posting links myself on 2026-11-16.
 
+Also used for (2026-11-17): finding the App Studio test to link and drafting the peer feedback row. Verified by me: I opened the link and checked that it goes to the test where a regular member gets 403 on the admin routes.
+
 **Correction after checking the original page:** Claude first suggested an Abridge Software Engineer, Early Career posting. When I opened the link on 2026-11-16 the posting did not exist, so I removed it and replaced it with postings I could confirm on the employer's own page.
 
 ---
 
 ## 2. RAG app + technical research
 
-**Changed / checked / next:** Changed: my first guess was vector search only; I chose both vector and graph. Checked: I checked all the links on 2026-11-16. Next: build the import step, chunk page 1, extract its entities and relationships, and check each one against the source passage.
+**Changed / checked / next:** Changed: my first guess was vector search only; I chose both vector and graph, and added Q5 after Bridget's review. Checked: I checked all the links on 2026-11-16. Next: build the import step, chunk page 1, extract its entities and relationships, and check each one against the source passage.
 
 ### Domain, reader and question
 
@@ -144,7 +146,7 @@ Tool: Claude. Used for: finding candidate postings and drafting this structure. 
 
 ### Source trace (planned, not run)
 
-The question "What are symptoms of diabetes": the MedlinePlus Diabetes health topic page (https://medlineplus.gov/diabetes.html, open it and confirm) is split into chunks, each keeping its page link -> the chunks are embedded and stored; entities and relationships are also extracted (for example, diabetes -> has symptom -> increased thirst), each tied to its passage -> the question retrieves the closest chunk about symptoms, and the graph adds connected facts -> the model answers from only those and shows the page link. A wrong or invented relationship would show up when I compare it to the passage it points to. (planned, not run)
+The question "What are symptoms of diabetes": the MedlinePlus Diabetes health topic page (https://medlineplus.gov/diabetes.html) is split into chunks, each keeping its page link -> the chunks are embedded and stored; entities and relationships are also extracted (for example, diabetes -> has symptom -> increased thirst), each tied to its passage -> the question retrieves the closest chunk about symptoms, and the graph adds connected facts -> the model answers from only those and shows the page link. A wrong or invented relationship would show up when I compare it to the passage it points to. (planned, not run)
 
 ### Architecture and constraints
 
@@ -168,7 +170,7 @@ The question "What are symptoms of diabetes": the MedlinePlus Diabetes health to
 - Q1 (answerable from the source): "What are common diabetes symptoms?" Expected: an answer built from the MedlinePlus diabetes pages, with a visible source link. (planned)
 - Q2 (answerable from the source): "Is type 1 diabetes genetic?" Expected: an answer from the MedlinePlus pages with a source link, or an honest "the source does not say". (planned)
 - Q3 (emergency, the app should not answer): "Am I having a heart attack?" Expected: the app does not diagnose and tells the person to call emergency services (911), because this is an emergency. (planned)
-- Q4 (a paraphrase of Q1): "What are symptoms of diabetes" Expected: the same answer and source as Q1. (planned)
+- Q4 (a paraphrase of Q1): "Why am I always thirsty and tired?" Expected: the same symptoms page and source link as Q1, even though it shares almost no words with Q1. (planned)
 - Q5 (depends on connections): "Which complications are linked to high blood sugar?" Expected: an answer that follows the connections between high blood sugar and its complications, each with a source link. My prediction: the graph is needed to pass this, because it depends on connections. (planned, added after Bridget's feedback)
 
 ### Peer feedback
