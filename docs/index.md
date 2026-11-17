@@ -25,13 +25,13 @@ Repository: https://github.com/apink634/is373-individual
 
 ### Three original employer postings
 
-Open each link on the employer's own page and fill in the facts yourself. Write "not stated" if the page doesn't say.
+All three are on the employers' own pages. "Not stated" means the page doesn't say.
 
 | | Posting 1 (Direction A: medical AI) | Posting 2 (Direction B: AI security) | Posting 3 (Direction B: AI security) |
 |---|---|---|---|
 | Employer / title | Commure, Software Engineer, Athelas Home | Brain Co., AI Security Engineer, 2027 New Grad | Together AI, Hardware Security Engineer, New Grad (2027) |
 | Employer page | https://www.commure.com/careers?ashby_jid=6a421e56-45ee-4ef9-9d6d-6454b3bcb3e7#job-listing | https://jobs.ashbyhq.com/brainco/32c4e1c9-ccd1-4dca-a68b-31ad1b868030 | https://job-boards.greenhouse.io/togetherai/jobs/5238471007 |
-| Date I checked | 2026-11-16 | 2026-11-16 | 2026-11-16 (open the page and confirm) |
+| Date I checked | 2026-11-16 | 2026-11-16 | 2026-11-16 |
 | Location / on-site | Sao Paulo, Brazil; remote; full-time | San Francisco Bay Area; hybrid; full-time | San Francisco; the application asks about working four days a week in the office |
 | Eligibility | Bachelor's or Master's in CS, Software Engineering or related, or equivalent experience; professional software engineering experience required; work authorization not stated; estimated base $40K to $50K | Completing a bachelor's or master's degree in Spring 2027; "full-time, entry-level"; no prior security experience needed; work authorization and pay not stated | Pursuing a degree in EE, CS, SE or related, expected by Summer 2027; work authorization not stated; $140,000 to $150,000 base |
 | Responsibility 1 | Develop existing backend and frontend services for the Athelas device product and improve its infrastructure | Build internal tools and automation that engineers use, such as linters, reusable workflows, bots, CLIs and dashboards | Design, prototype and implement security solutions for AI infrastructure across hardware, firmware and operating systems |
@@ -69,7 +69,7 @@ Open each link on the employer's own page and fill in the facts yourself. Write 
 | Responsibility the employer asks for | My evidence (link) | Gap |
 |---|---|---|
 | Python and Flask backend (Commure) | Word Game, a Flask and SQLite app with tests (IS218): https://github.com/apink634/word-game | No professional experience yet |
-| Reliable Python, version control, CI/CD, shipped project (Brain Co.) | Word Game and App Studio repos with tests and CI (links above) | Docker and Traefik in my Server Studio repo: https://github.com/apink634/my-server-studio | No cloud platform experience yet |
+| Reliable Python, version control, CI/CD, shipped project (Brain Co.) | Word Game and App Studio repos with tests and CI (links above); Docker and Traefik in my Server Studio repo: https://github.com/apink634/my-server-studio | No cloud platform experience yet; no hands-on LLM project yet |
 | Cybersecurity best practices (Commure) | My App Studio: password hashing, login throttling, CSRF protection and server-enforced admin/member roles: https://github.com/apink634/my-app-studio (built with an AI coach; I tested and reviewed it) | No security job experience; my work is course projects |
 | Code quality and testing (Commure) | Automated checks and CI in my App Studio repo (same link) | Not yet used at professional scale |
 | Evaluate AI model output (Ambience) | Planned: my RAG evaluation questions (section 2) | Not built yet |
@@ -106,7 +106,7 @@ Tool: Claude. Used for: finding candidate postings and drafting this structure. 
 
 ## 2. RAG app + technical research
 
-**Changed / checked / next:** Changed: chose a graph over my first guess of vector. Checked: I checked all the links on 2026-11-16. Next: build the import step and test page 1.
+**Changed / checked / next:** Changed: my first guess was vector search only; I chose both vector and graph. Checked: I checked all the links on 2026-11-16. Next: build the import step, chunk page 1, extract its entities and relationships, and check each one against the source passage.
 
 ### Domain, reader and question
 
@@ -132,27 +132,27 @@ Tool: Claude. Used for: finding candidate postings and drafting this structure. 
 
 ### Two approaches compared
 
-| | Approach A: vector only | Approach B: vector + graph |
-|---|---|---|
-| What it stores | Chunks of text turned into embeddings, with their source links | Entities (such as conditions and symptoms) and the relationships between them, plus source links |
-| Good for | Finding the passage closest in meaning to a question | Questions about how things connect, and summarizing large collections |
-| Cost / complexity | Lower: chunk, embed, search | Higher: extracting entities and relationships has to be built and checked first |
+| | Approach A: vector only | Approach B: vector + graph | Approach C: graph only |
+|---|---|---|---|
+| What it stores | Chunks of text turned into embeddings, with their source links | Entities (such as conditions and symptoms) and the relationships between them, plus source links | Entities and relationships only, each tied to the passage and page link that states it |
+| Good for | Finding the passage closest in meaning to a question | Questions about how things connect, and summarizing large collections | Following connections between facts, such as condition to symptom to risk factor |
+| Cost / complexity | Lower: chunk, embed, search | Higher: extracting entities and relationships has to be built and checked first | Higher: extraction has to be built and every relationship checked against the source, because AI extraction can invent links |
 
 **My prediction (first guess, not final):** vector search, "since the question is more straightforward."
 
-**Final choice:** graph, "because diabetes and medical fields deal with complex information and dependencies, so the connections are important." (My first guess was vector.)
+**Final choice:** Approach B, both vector and graph, because diabetes and medical fields deal with complex information and dependencies, so the connections are important (my words), and the vector search finds the right passage. (My first guess was vector only. I considered graph only and decided against it: it drops passage search.) Risk I accept: extracted relationships must be checked against the source text.
 
 ### Source trace (planned, not run)
 
-One MedlinePlus page → chunk → representation → retrieval → "What are symptoms of diabetes" -> the MedlinePlus Diabetes health topic page (https://medlineplus.gov/diabetes.html, open it and confirm) is split into chunks, each keeping its page link -> the chunks are stored -> the question retrieves the chunk about symptoms -> the model answers from only that chunk and shows the page link. (planned, not run)
+The question "What are symptoms of diabetes": the MedlinePlus Diabetes health topic page (https://medlineplus.gov/diabetes.html, open it and confirm) is split into chunks, each keeping its page link -> the chunks are embedded and stored; entities and relationships are also extracted (for example, diabetes -> has symptom -> increased thirst), each tied to its passage -> the question retrieves the closest chunk about symptoms, and the graph adds connected facts -> the model answers from only those and shows the page link. A wrong or invented relationship would show up when I compare it to the passage it points to. (planned, not run)
 
 ### Architecture and constraints
 
 1. **Source:** The summaries on MedlinePlus diabetes health topic pages.
-2. **Import:** download the summaries (from the pages or MedlinePlus's XML data) and split them into chunks, each chunk keeping its page link.
-3. **Store:** the chunks go into a store I can search (vector or graph, per my choice above).
-4. **Retrieve:** when someone asks a question, the app finds the few chunks that match.
-5. **Answer:** an AI model writes the answer from only those chunks and shows the source links.
+2. **Import:** download the summaries (from the pages or MedlinePlus's XML data) and split them into short chunks, each keeping its page link. Also extract entities and relationships from each chunk (for example, a condition and its symptoms), keeping the passage and page link for every relationship.
+3. **Store:** the chunks go into a vector store as embeddings. The entities and relationships go into a graph, and each relationship points to the passage that states it.
+4. **Retrieve:** when someone asks a question, the vector search finds the chunks closest in meaning, and the graph adds connected facts by following relationships from the matching entities.
+5. **Answer:** an AI model writes the answer from only the retrieved chunks and facts, and shows the source links.
 
 **Hosting and limits:** It will run on my laptop (local only) at this stage. A hosted app is not required at Plan.
 
@@ -161,6 +161,7 @@ One MedlinePlus page → chunk → representation → retrieval → "What are sy
 1. As a newly diagnosed person, I want to ask what the symptoms of diabetes are and see the MedlinePlus page the answer came from. Check: ask Q1 and see an answer with a source link. (planned)
 2. I want the app to say when it doesn't know. Check: ask something the pages don't cover and get an honest "not covered". (planned)
 3. If I describe an emergency, I want the app to send me to emergency help, not diagnose me. Check: ask "Am I having a heart attack?" and see it point to 911. (planned)
+4. As a reader, I want every fact in an answer to be stated in the source, so I'm not misled. Check: for ten relationships in the graph, open the passage it points to and confirm the passage says it. (planned)
 
 ### Evaluation questions
 
