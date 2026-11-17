@@ -20,7 +20,9 @@ Group record (separate): https://github.com/mcbridgeee/is373-group-course-refere
 
 **Question:** ____ (what do entry-level medical-AI roles ask new graduates to do, and what should my portfolio show first?)
 
-**Target reader:** A hiring manager at a health-AI company. ____ (one sentence in my own words on what they look for and how long they spend)
+**Target reader:** A hiring manager for an AI security or security-minded software team. ____ (one sentence in my own words on what they look for and how long they spend)
+
+**Promise:** "For an AI security hiring manager, this portfolio shows a tested, secure web project I built and how I made each decision."
 
 ### Three original employer postings
 
@@ -36,7 +38,7 @@ Open each link on the employer's own page and fill in the facts yourself. Write 
 | Responsibility 1 | Develop existing backend and frontend services for the Athelas device product and improve its infrastructure | Build internal tools and automation that engineers use, such as linters, reusable workflows, bots, CLIs and dashboards | Design, prototype and implement security solutions for AI infrastructure across hardware, firmware and operating systems |
 | Responsibility 2 | Implement cybersecurity best practices throughout the software development lifecycle | Use AI and LLMs to automate manual review work, such as triaging findings and writing remediation guidance | Assess and improve the security posture of server and accelerator platforms |
 | Responsibility 3 | Establish and enforce best practices for code quality, testing and deployment | Add automated guardrails to CI/CD pipelines so problems are caught before they ship | Support the secure platform lifecycle, from device onboarding and provisioning to inventory |
-| Skill I want to develop | ____ | ____ | ____ |
+| Skill I want to develop | Understanding medical-setting AI | Networking skills in the Bay Area | Understanding the hardware that goes into everyday systems |
 
 **Also looked at and rejected (original employer pages, checked 2026-11-16):**
 - Ambience Healthcare, Clinical AI Researcher: requires an advanced clinical degree (MD or DO), not entry-level.
@@ -44,7 +46,7 @@ Open each link on the employer's own page and fill in the facts yourself. Write 
 - Commure, Communications Designer: a brand design role asking for 5+ years.
 - Note: the Together AI page says "New Grad" in the title but "We're looking for an intern" in its About section.
 
-**Fit note:** Entry-level medical-AI engineering roles were hard to find; the medical postings I checked mostly asked for clinical degrees, sales experience or years of professional experience. ____ (my reaction, in my own words)
+**Fit note:** Entry-level medical-AI engineering roles were hard to find; the medical postings I checked mostly asked for clinical degrees, sales experience or years of professional experience. My reaction: "I wasn't that surprised by the number of AI related medical roles. It is a fairly new development in the field that is growing." (Assumption, not confirmed: the field is growing. My three medical postings do not measure that.)
 
 ### Two career directions
 
@@ -53,9 +55,9 @@ Open each link on the employer's own page and fill in the facts yourself. Write 
 | Based on | Commure (and the medical postings I rejected) | Brain Co., Together AI |
 | Daily work | Backend and frontend services for a medical device, with security, testing and deployment practices | Building internal security tools and automation, using LLMs to automate review, adding CI/CD guardrails; or securing AI infrastructure |
 | What I would need | Professional experience, Docker and Kubernetes, data pipelines, interest in medical device work | Strong Python, version control, CI/CD, containers, LLM experience or eagerness to learn; no prior security experience (Brain Co.) |
-| Fit with my current work | ____ | ____ |
+| Fit with my current work | Partial: Python and Flask (Word Game), security and testing (App Studio); no professional experience, Kubernetes, data pipelines or computer vision | Strong: Python, tests and CI, App Studio security work (password hashing, CSRF, server-enforced roles), Docker and Traefik (Server Studio); gap: no hands-on LLM or AI-agent project yet (my RAG app is only planned) |
 
-**Chosen direction:** A, medical AI, because ____.
+**Chosen direction:** B, AI security, because "there are more jobs that fit my expertise and skillset." (Evidence: Brain Co. is entry-level, needs no prior security experience and asks for Python, CI/CD and LLM work.)
 
 ### Facts, interpretations and assumptions
 
@@ -68,24 +70,24 @@ Open each link on the employer's own page and fill in the facts yourself. Write 
 | Responsibility the employer asks for | My evidence (link) | Gap |
 |---|---|---|
 | Python and Flask backend (Commure) | Word Game, a Flask and SQLite app with tests (IS218): https://github.com/apink634/word-game | No professional experience yet |
-| Reliable Python, version control, CI/CD, shipped project (Brain Co.) | Word Game and App Studio repos with tests and CI (links above) | Cloud and containers: ____ |
+| Reliable Python, version control, CI/CD, shipped project (Brain Co.) | Word Game and App Studio repos with tests and CI (links above) | Docker and Traefik in my Server Studio repo: https://github.com/apink634/my-server-studio | No cloud platform experience yet |
 | Cybersecurity best practices (Commure) | My App Studio: password hashing, login throttling, CSRF protection and server-enforced admin/member roles: https://github.com/apink634/my-app-studio (built with an AI coach; I tested and reviewed it) | ____ |
 | Code quality and testing (Commure) | Automated checks and CI in my App Studio repo (same link) | ____ |
 | Evaluate AI model output (Ambience) | Planned: my RAG evaluation questions (section 2) | Not built yet |
 
 ### Portfolio page outline
 
-1. ____
-2. ____
-3. ____
+1. **Home:** my name, the promise sentence, and one featured project (App Studio) linked above the fold, plus links to my code and a way to contact me. (draft, to confirm)
+2. **Projects:** App Studio first (security: password hashing, CSRF, server-enforced roles; tests and CI), then Word Game and my RAG app once it exists. Each project shows one decision, the alternative I considered and the check that tested it. (draft, to confirm)
+3. **About / contact:** a short paragraph, my GitHub and LinkedIn, and my resume. (draft, to confirm)
 
 ### Two lightweight layouts
 
 | | Layout A | Layout B |
 |---|---|---|
-| Feel | ____ | ____ |
-| Best for the hiring manager because | ____ | ____ |
-| Planned check | ____ (planned) | ____ (planned) |
+| Feel | Builder's notebook: short written project stories with problem, decision and test | Project dashboard: a card grid with title, stack and link |
+| Best for the hiring manager because | They can read how I made decisions | They can scan quickly and open the code |
+| Planned check | The featured project and its GitHub link are visible without scrolling (planned) | Tabbing reaches every link in order with a visible focus outline (planned) |
 
 **Leaning toward:** ____ because ____.
 
