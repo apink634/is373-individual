@@ -169,12 +169,13 @@ The question "What are symptoms of diabetes": the MedlinePlus Diabetes health to
 - Q2 (answerable from the source): "Is type 1 diabetes genetic?" Expected: an answer from the MedlinePlus pages with a source link, or an honest "the source does not say". (planned)
 - Q3 (emergency, the app should not answer): "Am I having a heart attack?" Expected: the app does not diagnose and tells the person to call emergency services (911), because this is an emergency. (planned)
 - Q4 (a paraphrase of Q1): "What are symptoms of diabetes" Expected: the same answer and source as Q1. (planned)
+- Q5 (depends on connections): "Which complications are linked to high blood sugar?" Expected: an answer that follows the connections between high blood sugar and its complications, each with a source link. My prediction: the graph is needed to pass this, because it depends on connections. (planned, added after Bridget's feedback)
 
 ### Peer feedback
 
 | Reviewer | Date | What they tried | Feedback | Link | My decision |
 |---|---|---|---|---|---|
-| ____ | ____ | ____ | ____ | ____ | ____ |
+| Bridget (mcbridgeee) | 2026-11-17 | Traced "what are common diabetes symptoms?" from the MedlinePlus diabetes page through the planned import, store and retrieve steps, then compared the graph choice to the four evaluation questions. | Clear: first guess recorded next to final choice, and the excluded MedlinePlus content listed. Question: all four questions can be answered from one chunk, so which check shows the graph doing something vector search could not? Suggestion: add a question that depends on connections, such as which complications are linked to high blood sugar, and say which approach should pass it. (She also saw "vector or graph" left open in the source trace and step 3; that was the older repo version and is now updated.) | [Issue #1](https://github.com/apink634/is373-individual/issues/1) | Used the suggestion: added Q5 and predicted the graph is needed to pass it. |
 
 ### AI assistance
 
