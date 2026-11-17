@@ -1,7 +1,6 @@
 # IS373 Individual Record: Portfolio + RAG App (Plan stage)
 
 Repository: https://github.com/apink634/is373-individual
-Group record (separate): https://github.com/mcbridgeee/is373-group-course-reference
 
 > This is a plan, not a finished product. Checks are marked **planned**, **attempted** or **observed**. Nothing below is marked observed unless I actually ran it.
 
@@ -14,13 +13,13 @@ Group record (separate): https://github.com/mcbridgeee/is373-group-course-refere
 
 ## 1. Portfolio + career research
 
-**Changed / checked / next:** Changed: ____. Checked: ____. Next: ____.
+**Changed / checked / next:** Changed: replaced a dead posting and chose Direction B. Checked: opened and read the listing pages. Next: build the portfolio home page and project cards.
 
 ### Research question and target reader
 
 **Question:** ____ (what do entry-level medical-AI roles ask new graduates to do, and what should my portfolio show first?)
 
-**Target reader:** A hiring manager for an AI security or security-minded software team. ____ (one sentence in my own words on what they look for and how long they spend)
+**Target reader:** A hiring manager for an AI security or security-minded software team. They look for "someone with experience." (Time spent: ____)
 
 **Promise:** "For an AI security hiring manager, this portfolio shows a tested, secure web project I built and how I made each decision."
 
@@ -77,9 +76,9 @@ Open each link on the employer's own page and fill in the facts yourself. Write 
 
 ### Portfolio page outline
 
-1. **Home:** my name, the promise sentence, and one featured project (App Studio) linked above the fold, plus links to my code and a way to contact me. (draft, to confirm)
-2. **Projects:** App Studio first (security: password hashing, CSRF, server-enforced roles; tests and CI), then Word Game and my RAG app once it exists. Each project shows one decision, the alternative I considered and the check that tested it. (draft, to confirm)
-3. **About / contact:** a short paragraph, my GitHub and LinkedIn, and my resume. (draft, to confirm)
+1. **Home:** my name, the promise sentence, and one featured project (App Studio) linked above the fold, plus links to my code and a way to contact me.
+2. **Projects:** App Studio first (security: password hashing, CSRF, server-enforced roles; tests and CI), then Word Game and my RAG app once it exists. Each project shows one decision, the alternative I considered and the check that tested it.
+3. **About / contact:** a short paragraph, my GitHub and LinkedIn, and my resume.
 
 ### Two lightweight layouts
 
@@ -89,7 +88,7 @@ Open each link on the employer's own page and fill in the facts yourself. Write 
 | Best for the hiring manager because | They can read how I made decisions | They can scan quickly and open the code |
 | Planned check | The featured project and its GitHub link are visible without scrolling (planned) | Tabbing reaches every link in order with a visible focus outline (planned) |
 
-**Leaning toward:** ____ because ____.
+**Leaning toward:** Layout B, the project dashboard, "because it's more professional."
 
 ### Peer feedback
 
@@ -141,7 +140,7 @@ Tool: Claude. Used for: finding candidate postings and drafting this structure. 
 
 **My prediction (first guess, not final):** vector search, "since the question is more straightforward."
 
-**Final choice:** ____ because ____. (Decide this yourself after the research.)
+**Final choice:** graph, "because it handles complex information." (To confirm: my first guess was vector. Do my questions need connections between facts, or just the right passage? I will write my answer here: ____)
 
 ### Source trace (planned, not run)
 
@@ -149,20 +148,26 @@ One MedlinePlus page → chunk → representation → retrieval → answer with 
 
 ### Architecture and constraints
 
-____ (what runs where; hosting and resource limits; what is local only)
+1. **Source:** MedlinePlus diabetes health topic pages.
+2. **Import:** download the pages and split them into chunks, each chunk keeping its page link.
+3. **Store:** the chunks go into a store I can search (vector or graph, per my choice above).
+4. **Retrieve:** when someone asks a question, the app finds the few chunks that match.
+5. **Answer:** an AI model writes the answer from only those chunks and shows the source links.
+
+**Hosting and limits:** ____ (planned; a hosted app is not required at Plan)
 
 ### Stories and checks (3 to 5, all planned)
 
-1. ____ Check: ____ (planned)
-2. ____ Check: ____ (planned)
-3. ____ Check: ____ (planned)
+1. As a newly diagnosed person, I want to ask what the symptoms of diabetes are and see the MedlinePlus page the answer came from. Check: ask Q1 and see an answer with a source link. (planned)
+2. I want the app to say when it doesn't know. Check: ask something the pages don't cover and get an honest "not covered". (planned)
+3. If I describe an emergency, I want the app to send me to emergency help, not diagnose me. Check: ask "Am I having a heart attack?" and see it point to 911. (planned)
 
 ### Evaluation questions
 
 - Q1 (answerable from the source): "What are common diabetes symptoms?" Expected: an answer built from the MedlinePlus diabetes pages, with a visible source link. (planned)
 - Q2 (answerable from the source): "Is type 1 diabetes genetic?" Expected: an answer from the MedlinePlus pages with a source link, or an honest "the source does not say". (planned)
 - Q3 (emergency, the app should not answer): "Am I having a heart attack?" Expected: the app does not diagnose and tells the person to call emergency services (911), because this is an emergency. (planned)
-- Q4 (a paraphrase of Q1, still to write): ____
+- Q4 (a paraphrase of Q1): "What are symptoms of diabetes" Expected: the same answer and source as Q1. (planned)
 
 ### Peer feedback
 
