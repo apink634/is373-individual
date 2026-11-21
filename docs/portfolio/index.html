@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ann Carlos · Security-minded web projects</title>
+<meta name="description" content="Portfolio of Ann Carlos, HCI student at NJIT building tested, security-minded web apps.">
+<style>
+:root{--ink:#14213d;--paper:#f7f7f2;--card:#ffffff;--accent:#1f6f5c;--muted:#4a5568;--line:#d6d9de;--warn:#8a4b00}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:1.05rem/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--accent);text-underline-offset:.2em}
+a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.skip{position:absolute;left:12px;top:-60px;background:var(--card);padding:8px}
+.skip:focus{top:12px}
+header{border-bottom:1px solid var(--line);padding:18px 0}
+header .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}
+.name{font-weight:800;font-size:1.15rem;color:var(--ink);text-decoration:none}
+nav ul{display:flex;flex-wrap:wrap;gap:18px;list-style:none;margin:0;padding:0}
+nav a{color:var(--ink);font-weight:600}
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+h1{font-size:clamp(2rem,5vw,3rem);line-height:1.1;margin:0 0 14px}
+h2{font-size:1.6rem;margin:0 0 16px}
+h3{margin:0 0 6px;font-size:1.15rem}
+.lede{font-size:1.2rem;max-width:60ch}
+.tags{display:flex;flex-wrap:wrap;gap:8px;padding:0;list-style:none}
+.tags li{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:2px 12px;font-size:.9rem}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700}
+.btn.alt{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:8px}
+.card p{margin:0}
+.status{font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.status.done{color:var(--accent)}
+.status.wip{color:var(--warn)}
+.meta{color:var(--muted);font-size:.92rem}
+.card .links{margin-top:auto;display:flex;flex-wrap:wrap;gap:12px;font-weight:600}
+.featured{grid-column:1/-1;border:2px solid var(--accent)}
+.note{background:var(--card);border-left:4px solid var(--accent);padding:14px 18px;max-width:75ch}
+footer{padding:28px 0;color:var(--muted);font-size:.9rem}
+@media (max-width:600px){section{padding:28px 0}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div class="wrap">
+    <a class="name" href="#top">Ann Carlos</a>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="#direction">Direction</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="../">Project record</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section id="top" aria-labelledby="intro-title">
+  <div class="wrap">
+    <h1 id="intro-title">I build small web apps that are tested and secure by default.</h1>
+    <p class="lede">I'm a second-year Human-Computer Interaction student at NJIT and an Albert Dorman Honors Scholar. I'm aiming for internships and entry-level roles on AI security and security-minded software teams.</p>
+    <ul class="tags" aria-label="Skills shown on this page">
+      <li>Python</li><li>FastAPI</li><li>pytest</li><li>GitHub Actions CI</li><li>Docker + Traefik + HTTPS</li><li>Password hashing, CSRF, roles</li><li>RAG (in progress)</li>
+    </ul>
+    <div class="actions">
+      <a class="btn" href="#projects">See projects</a>
+      <a class="btn alt" href="https://github.com/apink634">View my code on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<section id="direction" aria-labelledby="direction-title">
+  <div class="wrap">
+    <h2 id="direction-title">Target direction: AI security</h2>
+    <p>I compared medical-AI and AI-security postings on the employers' own pages. I chose AI security because more entry-level roles matched skills I can already show.</p>
+    <p class="note"><strong>The finding that shaped this site:</strong> Brain Co.'s AI Security Engineer (2027 New Grad) posting asks for reliable Python, CI/CD guardrails and LLM-based automation, and says no prior security experience is needed. So this page leads with <em>tested security work and CI evidence</em> instead of job titles. It also adds the hands-on LLM project my research said I was missing: the RAG app below.</p>
+    <p class="meta">Reader: a hiring manager on an AI security or security-minded software team. Full research: <a href="../#1-portfolio--career-research">career research in my project record</a>.</p>
+  </div>
+</section>
+
+<section id="projects" aria-labelledby="projects-title">
+  <div class="wrap">
+    <h2 id="projects-title">Projects</h2>
+    <div class="grid">
+      <article class="card featured" aria-labelledby="p-app">
+        <p class="status done">Featured · checked with tests and CI</p>
+        <h3 id="p-app">App Studio: accounts with server-enforced roles</h3>
+        <p>A FastAPI app with signup, login, a private dashboard and an admin area. Passwords are hashed with Argon2, forms are protected against CSRF, login attempts are throttled, and the admin role is checked on the server for every request.</p>
+        <p><strong>Decision:</strong> enforce roles on the server instead of only hiding the Admin link. <strong>Check:</strong> <a href="https://github.com/apink634/my-app-studio/blob/f224075e99493874f7cdd0e8ed880b1104cce5a6/contracts/test_roles.py#L30-L35">a test shows a regular member gets 403 on admin routes</a>.</p>
+        <p class="meta">Built with an AI coach; I made the decisions, ran the checks and reviewed the code.</p>
+        <div class="links"><a href="https://github.com/apink634/my-app-studio">Repository</a></div>
+      </article>
+
+      <article class="card" aria-labelledby="p-rag">
+        <p class="status wip">In progress · Build stage</p>
+        <h3 id="p-rag">Diabetes questions answered from MedlinePlus (RAG)</h3>
+        <p>Imports public-domain MedlinePlus summaries, stores them as embeddings plus a small fact graph, and answers questions with links to the exact passages. Emergency questions are sent to 911, not answered.</p>
+        <p class="meta">Code and tests are written; hosting at rag.anncarlos.me is not live yet. Case study not written yet.</p>
+        <div class="links"><a href="https://github.com/apink634/my-app-studio">Code (in App Studio)</a><a href="../#2-rag-app--technical-research">Plan and checks</a></div>
+      </article>
+
+      <article class="card" aria-labelledby="p-server">
+        <p class="status done">Live · checked</p>
+        <h3 id="p-server">Server Studio: HTTPS hosting</h3>
+        <p>My own server running Docker and Traefik with HTTPS, serving a tested calculator app without disturbing my other sites.</p>
+        <p class="meta">Short case study only.</p>
+        <div class="links"><a href="https://calc.anncarlos.me">Live app</a><a href="https://github.com/apink634/my-server-studio/blob/main/SPEC.md">Evidence</a></div>
+      </article>
+
+      <article class="card" aria-labelledby="p-group">
+        <p class="status wip">In progress · team project</p>
+        <h3 id="p-group">IS373 group content system</h3>
+        <p>A shared content workflow built with my team. My own contribution is recorded in the team's contributions file.</p>
+        <p class="meta">Case study not written yet.</p>
+        <div class="links"><a href="https://github.com/mcbridgeee/is373-group-course-reference">Team repository</a></div>
+      </article>
+
+      <article class="card" aria-labelledby="p-word">
+        <p class="status wip">Plan stage · no code yet</p>
+        <h3 id="p-word">Word Game</h3>
+        <p>A small, secure word-guessing game with private player history, planned for IS218.</p>
+        <div class="links"><a href="https://apink634.github.io/word-game/">Plan</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <h2 id="contact-title">Contact</h2>
+    <div class="actions">
+      <a class="btn" href="https://www.linkedin.com/in/anncarlos">LinkedIn</a>
+      <a class="btn alt" href="https://github.com/apink634">GitHub</a>
+      <a class="btn alt" href="https://apink634.github.io/career-research/resume">Résumé</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">Portfolio foundation for IS373 Build (November 2026). Unfinished work is labeled on each card.</div></footer>
+</body>
+</html>
