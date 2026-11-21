@@ -1,8 +1,8 @@
-# IS373 Individual Record: Portfolio + RAG App (Plan stage)
+# IS373 Individual Record: Portfolio + RAG App (Build stage)
 
 Repository: https://github.com/apink634/is373-individual
 
-> This is a plan, not a finished product. Checks are marked **planned**, **attempted** or **observed**. Nothing below is marked observed unless I actually ran it.
+> **Build stage (Nov 24).** Each section starts with what I built and checked this stage; the Plan-stage research stays below it. Checks are marked **planned**, **attempted** or **observed**. Nothing is marked observed unless I actually ran it.
 
 ## Index
 
@@ -13,7 +13,36 @@ Repository: https://github.com/apink634/is373-individual
 
 ## 1. Portfolio + career research
 
-**Changed / checked / next:** Changed: replaced a dead posting, chose Direction B, and linked the App Studio admin-access test after Dhruvi's review. Checked: opened and read the listing pages. Next: build the portfolio home page and project cards.
+### Build: hosted portfolio foundation
+
+**Live page:** https://apink634.github.io/is373-individual/portfolio/ · [source](https://github.com/apink634/is373-individual/blob/main/docs/portfolio/index.html)
+
+**What's there:** an introduction, my target direction (AI security), navigation (Direction, Projects, Contact, Project record), five project cards and contact links (LinkedIn, GitHub, résumé).
+
+**Layout:** Layout B, the project dashboard (a card grid), which I leaned toward at Plan. Each card shows a status label, so unfinished work is visible at a glance.
+
+**The career finding that shaped the site:** Brain Co.'s AI Security Engineer (2027 New Grad) posting asks for reliable Python, CI/CD guardrails and LLM-based automation, and says no prior security experience is needed. So the page leads with *tested security work and CI evidence* (App Studio, featured), and the RAG app card shows the LLM project my Plan said I was missing.
+
+| Card | Status shown on the page |
+|---|---|
+| App Studio: accounts with server-enforced roles | Featured, checked with tests and CI (links the 403 admin test) |
+| Diabetes RAG app | In progress; case study not written yet |
+| Server Studio: HTTPS hosting | Live, short case study only |
+| IS373 group content system | In progress; case study not written yet |
+| Word Game | Plan stage, no code yet |
+
+**Checks**
+- Page loads on GitHub Pages: **observed** (2026-11-21).
+- Featured project and its GitHub link visible without scrolling (Layout B's planned check from Plan): **not run** yet.
+- Tabbing reaches every link with a visible focus outline: **not run** yet. (The page has a skip link and a focus outline in its CSS, but I haven't tested it by keyboard.)
+
+**AI assistance:** Claude drafted the page from my Plan outline and career research; I chose the reader, direction and layout and checked that the page loads. The card text describes my own projects.
+
+**Changed / checked / next:** Changed: built and hosted the portfolio foundation in Layout B, with labeled status on every project. Checked: the page loads on GitHub Pages. Next: run the keyboard and above-the-fold checks, write the App Studio case study, and ask a classmate to review.
+
+### Plan-stage record
+
+**Changed / checked / next (Plan):** Changed: replaced a dead posting, chose Direction B, and linked the App Studio admin-access test after Dhruvi's review. Checked: opened and read the listing pages. Next: build the portfolio home page and project cards.
 
 ### Research question and target reader
 
@@ -108,7 +137,69 @@ Also used for (2026-11-17): finding the App Studio test to link and drafting the
 
 ## 2. RAG app + technical research
 
-**Changed / checked / next:** Changed: my first guess was vector search only; I chose both vector and graph, and added Q5 after Bridget's review. Checked: I checked all the links on 2026-11-16. Next: build the import step, chunk page 1, extract its entities and relationships, and check each one against the source passage.
+### Build: working hosted journey
+
+**Live app:** https://rag.anncarlos.me/rag (ask needs a free account; sign up at https://rag.anncarlos.me/signup)
+
+**Where it lives:** inside my App Studio app, as the course guide asks, deployed on my Server Studio server behind the existing Traefik with HTTPS.
+- Code: [apink634/my-app-studio](https://github.com/apink634/my-app-studio) · [PR #9, the RAG feature](https://github.com/apink634/my-app-studio/pull/9) · [PR #10, a fix after a server check failed](https://github.com/apink634/my-app-studio/pull/10)
+- Source list and permission: [`app/rag/sources.json`](https://github.com/apink634/my-app-studio/blob/main/app/rag/sources.json)
+- Tests: [`tests/test_rag.py`](https://github.com/apink634/my-app-studio/blob/main/tests/test_rag.py)
+- Deploy steps: [`deploy/README.md`](https://github.com/apink634/my-app-studio/blob/main/deploy/README.md)
+
+**The journey**
+1. **Import** (trusted command line only, not a web route): `python -m app.rag import` fetches the 5 MedlinePlus diabetes summaries through MedlinePlus's own web service. It splits them into chunks of up to 700 characters (paragraphs and lists kept together) and embeds each chunk with `BAAI/bge-small-en-v1.5` (384 numbers, runs locally, no key). Everything goes into SQLite, and each chunk keeps its page link.
+2. **Graph:** `python -m app.rag graph` asks Groq (`openai/gpt-oss-20b`) for relationships in each chunk from a fixed list (has symptom, causes, complication of, …). The model must quote the sentence that states each one. A relationship is kept only if the quote really appears in the chunk and names both entities.
+3. **Ask:** emergency words go straight to a "call 911" reply with no search or model call. Otherwise, vector search finds the top 4 chunks; if the best score is under 0.6, the app says "not covered" without calling the model. The graph adds facts about entities named in the question, from any page. Groq writes the answer from only those, citing [S1]/[G1].
+4. **Trace:** every answer is saved with the retrieved passages and their scores, the graph facts, the exact text sent to the model, and which citations it used. Traces are private to the account that asked.
+
+**Evidence links**
+- **Source/import record and sample representation:** https://rag.anncarlos.me/rag/sources lists each source, its chunk and graph counts and its content hash, plus one stored chunk with its embedding (first 8 numbers) and sample graph edges. JSON: https://rag.anncarlos.me/api/rag/sources
+- **Query/answer traces:** the six evaluation traces below. They are private to my account by design (private history), so a reviewer sees them through my demo or screenshots.
+
+**Actual checks (2026-11-21, on the hosted app)**
+
+| Check | Result | Status |
+|---|---|---|
+| Automated tests (parsing, chunking, repeat import, graph evidence filter, retrieval, emergency and not-covered guards, citations, owner-only traces, CSRF, login, rate-limit retry). These use a fake embedder and model, so they test my code, not the real models. | 117 tests + 18 App Studio contracts pass; CI green on PR #9 and #10 | observed |
+| First import on the server | 5 sources, 34 chunks | observed |
+| Repeat import | all 5 sources "unchanged", no duplicates | observed |
+| Graph extraction | all 34 chunks processed; 25 relationships kept, 0 rejected by the quote check (counts on the sources page) | observed |
+| 10 graph relationships checked against their quotes by hand (story 4) | 10/10 correct | observed |
+| App health over HTTPS | `HTTP/2 200`, container healthy | observed |
+| Data survives a restart (`docker compose restart rag`, then reload the Q1 trace) | Trace still loads; data is kept in the `rag-data` volume | observed |
+
+**Evaluation questions (asked in the browser while logged in)**
+
+| Q | Question | What happened | Trace | Status |
+|---|---|---|---|---|
+| Q1 | What are common diabetes symptoms? | Good answer with several citations; vector search found the symptoms passage | [trace](https://rag.anncarlos.me/rag/trace/c8f17d3100cc4131aee80b4bc1e3c52c) | observed |
+| Q2 | Is type 1 diabetes genetic? | Short, direct answer with citations | [trace](https://rag.anncarlos.me/rag/trace/49ffc05387bb45bea2656d5522425bcd) | observed |
+| Q3 | Am I having a heart attack? | Stopped before search and model; told me to call 911 | [trace](https://rag.anncarlos.me/rag/trace/263e5091ff72487aae93bdfa36652001) | observed |
+| Q4 | Why am I always thirsty and tired? (paraphrase of Q1) | Detailed answer in plain words with many sources, even though it shares few words with Q1 | [trace](https://rag.anncarlos.me/rag/trace/addd1bda497a4d7a9f78a285316aec27) | observed |
+| Q5 | Which complications are linked to high blood sugar? | Listed complications, each with a citation; the trace shows a "Connected facts (graph)" section | [trace](https://rag.anncarlos.me/rag/trace/f84f9134e2994d42abd4e25a209c2e54) | observed |
+| Extra | What foods help with gout? (not covered) | Said the sources don't cover it and to ask a professional | [trace](https://rag.anncarlos.me/rag/trace/b86cae0dbdb142f2aa1725b56c135c24) | observed |
+
+**Problems found and fixed**
+- *Before deploy:* the container health check would have failed, because the app only answers its own hostname, and Traefik doesn't route to an unhealthy container. I fixed it to send the right Host header and confirmed the old check got a 400 and the new one passed.
+- *On the server:* the first `graph` run stopped with a Groq 400. A direct test showed my key and JSON mode worked, so the cause was Groq rejecting a longer reply that failed its JSON check. [PR #10](https://github.com/apink634/my-app-studio/pull/10) retries without the check and skips a failing chunk instead of crashing. After that, all 34 chunks finished (one was retried after a free-tier rate limit).
+
+**Mocks and limits (labeled honestly)**
+- The hosted app uses no mocks. Only the automated tests use a fake embedder and model.
+- It knows only 5 MedlinePlus summaries. A.D.A.M. encyclopedia text, drug pages and images are never imported.
+- The graph is small: the Complications and High Blood Sugar pages produced only 2 and 1 relationships, so most graph facts come from the Diabetes and Type 1/2 pages.
+- The 0.6 minimum score was set before testing, not tuned.
+- Answers are written by an AI model and can still be wrong; every answer page says "not medical advice" and links its sources.
+- Free Groq tier: graph extraction is slow (rate limits). Asking is limited to 20 questions per account per hour.
+- The server builds the image itself instead of pulling a CI-built image. It's a 1 GB server, so I added 2 GB of swap.
+
+**AI assistance and my contribution:** Claude wrote most of the RAG code, tests and deploy files from my Plan, and explained each step. I chose the domain, the source, the reader, the evaluation questions and vector + graph. I set up DNS and the Groq key (kept only on the server), deployed and ran the import and graph on my server, asked the evaluation questions, judged the answers, and checked 10 graph relationships against their sources.
+
+**Changed / checked / next:** Changed: built and hosted the import → vector + graph retrieval → cited answer journey at rag.anncarlos.me, and fixed a graph failure found on the server (PR #10). Checked: real import, repeat import, graph extraction, 10/10 relationships, 6 evaluation questions with traces, the restart check and 117 automated tests. Next: ask Bridget to retry Q5 on the hosted app (reviewer retry for issue #1), and tune the minimum score.
+
+### Plan-stage record
+
+**Changed / checked / next (Plan):** Changed: my first guess was vector search only; I chose both vector and graph, and added Q5 after Bridget's review. Checked: I checked all the links on 2026-11-16. Next: build the import step, chunk page 1, extract its entities and relationships, and check each one against the source passage.
 
 ### Domain, reader and question
 
@@ -156,7 +247,7 @@ The question "What are symptoms of diabetes": the MedlinePlus Diabetes health to
 4. **Retrieve:** when someone asks a question, the vector search finds the chunks closest in meaning, and the graph adds connected facts by following relationships from the matching entities.
 5. **Answer:** an AI model writes the answer from only the retrieved chunks and facts, and shows the source links.
 
-**Hosting and limits:** It will run on my laptop (local only) at this stage. A hosted app is not required at Plan.
+**Hosting and limits (Plan):** It will run on my laptop (local only) at this stage. A hosted app is not required at Plan. *(Changed at Build: hosted at rag.anncarlos.me; see Build above.)*
 
 ### Stories and checks (3 to 5, all planned)
 
